@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muktha Public School - Day Care & Pre-Primary</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+    <!-- Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Fredoka', 'sans-serif'], // Playful font for headings
+                    },
+                    colors: {
+                        // Extracted from your banner image
+                        brand: {
+                            blue: '#1e40af',   // Royal Blue (Backgrounds)
+                            yellow: '#facc15', // Sunshine Yellow (Highlights)
+                            red: '#dc2626',    // Urgent Red (Admissions/CTA)
+                            green: '#16a34a',  // Growth Green (Features)
+                            light: '#f0f4f8',  // Light Blue-Grey background
+                        }
+                    },
+                    boxShadow: {
+                        'card': '0 10px 25px -5px rgba(30, 64, 175, 0.1), 0 8px 10px -6px rgba(30, 64, 175, 0.1)',
+                        'float': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Utilities */
+        body {
+            background-color: #f8fafc;
+            /* Subtle pattern overlay */
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .nav-active {
+            color: #1e40af !important;
+            background: #e0e7ff;
+            font-weight: 700;
+        }
+
+        /* Banner Curve Effect */
+        .hero-curve {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+
+        .hero-curve svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 60px;
+        }
+
+        .hero-curve .shape-fill {
+            fill: #f8fafc; /* Matches body background */
+        }
+
+        /* Card Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Animations */
+        .page-section {
+            display: none;
+            animation: slideUp 0.5s ease-out forwards;
+        }
+        .page-section.active { display: block; }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased relative overflow-x-hidden">
+
+    <!-- Navbar -->
+    <nav class="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-lg border-b border-gray-100 shadow-sm">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
+                <div class="w-10 h-10 bg-brand-blue text-white rounded-lg flex items-center justify-center text-xl shadow-lg">
+                    <i class="ph-fill ph-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-display font-bold leading-none text-brand-blue">Muktha <span class="text-brand-yellow">Public</span></h1>
+                    <p class="text-[10px] font-bold tracking-widest text-gray-400 uppercase">School</p>
+                </div>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-1 bg-gray-50 p-1 rounded-full border border-gray-100">
+                <button onclick="navigateTo('home')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="home">Home</button>
+                <button onclick="navigateTo('about')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="about">About</button>
+                <button onclick="navigateTo('programs')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="programs">Programs</button>
+                <button onclick="navigateTo('facilities')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="facilities">Facilities</button>
+                <button onclick="navigateTo('admissions')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="admissions">Admissions</button>
+                <button onclick="navigateTo('contact')" class="nav-link px-4 py-2 text-sm font-semibold text-gray-600 hover:text-brand-blue rounded-full transition-all" data-target="contact">Contact</button>
+            </div>
+
+            <div class="hidden md:block">
+                <a href="tel:8466032289" class="bg-brand-red text-white px-5 py-2.5 rounded-full font-bold text-sm shadow-md hover:bg-red-700 transition-all flex items-center gap-2">
+                    <i class="ph-bold ph-phone-call"></i> Call Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 text-brand-blue bg-blue-50 rounded-lg">
+                <i class="ph-bold ph-list text-2xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100 absolute w-full left-0 top-full shadow-xl">
+            <div class="p-4 flex flex-col gap-2">
+                <button onclick="mobileNavigate('home')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">Home</button>
+                <button onclick="mobileNavigate('about')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">About Us</button>
+                <button onclick="mobileNavigate('programs')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">Programs</button>
+                <button onclick="mobileNavigate('facilities')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">Facilities</button>
+                <button onclick="mobileNavigate('admissions')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">Admissions</button>
+                <button onclick="mobileNavigate('contact')" class="p-3 text-left font-semibold text-gray-700 hover:bg-gray-50 rounded-lg">Contact</button>
+                <a href="tel:8466032289" class="w-full mt-2 bg-brand-red text-white py-3 rounded-lg text-center font-bold shadow-md">
+                    Call 8466032289
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="min-h-screen pt-16">
+
+        <!-- ================= HOME PAGE ================= -->
+        <section id="home" class="page-section active">
+            <!-- Banner Style Hero -->
+            <div class="relative bg-brand-blue pt-12 pb-24 md:pt-20 md:pb-32 overflow-hidden">
+                <!-- Decorative Circles matching banner vibe -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-yellow/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/4"></div>
+
+                <div class="container mx-auto px-4 relative z-10">
+                    <div class="grid md:grid-cols-2 gap-12 items-center">
+                        <div class="text-white space-y-6 text-center md:text-left">
+                            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-yellow/20 border border-brand-yellow/40 text-brand-yellow font-bold text-xs uppercase tracking-wider">
+                                <span class="w-2 h-2 rounded-full bg-brand-yellow animate-pulse"></span>
+                                Admissions Open 2024-25
+                            </div>
+                            <h1 class="text-4xl md:text-6xl font-display font-bold leading-tight">
+                                A Loving Start to <br>
+                                <span class="text-brand-yellow">Bright Futures</span>
+                            </h1>
+                            <p class="text-blue-100 text-lg md:text-xl max-w-lg mx-auto md:mx-0 font-light">
+                                Muktha Public School offers premium Day Care & Pre-Primary education. Safe, nurturing, and activity-based learning in Allwyn Colony.
+                            </p>
+                            <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+                                <button onclick="navigateTo('admissions')" class="px-8 py-3.5 bg-brand-yellow text-brand-blue font-bold rounded-full shadow-lg hover:bg-yellow-300 hover:scale-105 transition-all">
+                                    Apply Now
+                                </button>
+                                <button onclick="navigateTo('contact')" class="px-8 py-3.5 bg-transparent border-2 border-white text-white font-bold rounded-full hover:bg-white/10 transition-all">
+                                    Visit Campus
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Hero Image Frame -->
+                        <div class="relative hidden md:block">
+                            <div class="absolute inset-0 bg-brand-yellow rounded-[2rem] transform rotate-3"></div>
+                            <div class="relative bg-white p-2 rounded-[2rem] transform -rotate-2 shadow-2xl">
+                                <img src="https://images.unsplash.com/photo-1587654780291-39c940483731?q=80&w=1000&auto=format&fit=crop" alt="Kids Learning" class="w-full h-80 object-cover rounded-[1.8rem]">
+                                
+                                <!-- Floating Badge -->
+                                <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-xl shadow-float flex items-center gap-3 border-l-4 border-brand-red">
+                                    <div class="bg-red-50 p-2 rounded-full text-brand-red text-xl">
+                                        <i class="ph-fill ph-heart"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-gray-500 uppercase">Rated #1</p>
+                                        <p class="text-sm font-bold text-gray-800">Caring Staff</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Curve Divider -->
+                <div class="hero-curve">
+                    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                        <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="container mx-auto px-4 -mt-12 relative z-20">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Card 1 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-card hover-lift border-t-4 border-brand-blue">
+                        <div class="w-14 h-14 bg-blue-50 text-brand-blue rounded-xl flex items-center justify-center text-3xl mb-4">
+                            <i class="ph-fill ph-shield-check"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Safe Campus</h3>
+                        <p class="text-gray-600 text-sm">CCTV surveillance and secure premises ensuring 100% safety for your child.</p>
+                    </div>
+                    <!-- Card 2 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-card hover-lift border-t-4 border-brand-yellow">
+                        <div class="w-14 h-14 bg-yellow-50 text-yellow-600 rounded-xl flex items-center justify-center text-3xl mb-4">
+                            <i class="ph-fill ph-smiley"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Happy Learning</h3>
+                        <p class="text-gray-600 text-sm">Play-based curriculum designed to make learning a joyful experience.</p>
+                    </div>
+                    <!-- Card 3 -->
+                    <div class="bg-white p-8 rounded-2xl shadow-card hover-lift border-t-4 border-brand-red">
+                        <div class="w-14 h-14 bg-red-50 text-brand-red rounded-xl flex items-center justify-center text-3xl mb-4">
+                            <i class="ph-fill ph-chalkboard-teacher"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">Expert Teachers</h3>
+                        <p class="text-gray-600 text-sm">Trained and caring faculty dedicated to early childhood development.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Strip -->
+            <div class="container mx-auto px-4 mt-20 mb-12">
+                <div class="bg-brand-blue rounded-2xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden shadow-xl">
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
+                    <div class="relative z-10 text-center md:text-left">
+                        <h3 class="text-2xl md:text-3xl font-display font-bold text-white mb-2">Admissions Open for New Batch!</h3>
+                        <p class="text-blue-100">Don't miss the chance. Limited seats available.</p>
+                    </div>
+                    <a href="tel:8466032289" class="relative z-10 bg-white text-brand-blue px-8 py-3 rounded-full font-bold shadow-lg hover:bg-gray-50 transition-all flex items-center gap-2">
+                        <i class="ph-bold ph-phone"></i> Call 8466032289
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT PAGE ================= -->
+        <section id="about" class="page-section container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <span class="text-brand-red font-bold uppercase tracking-widest text-xs bg-red-50 px-3 py-1 rounded-full">Who We Are</span>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-brand-blue mt-3">Nurturing Young Minds</h2>
+                    <div class="h-1.5 w-20 bg-brand-yellow mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div class="relative">
+                        <div class="absolute top-4 left-4 w-full h-full bg-brand-yellow rounded-2xl -z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800" class="rounded-2xl shadow-lg w-full">
+                    </div>
+                    <div class="space-y-6">
+                        <h3 class="text-2xl font-bold text-gray-800">Our Vision</h3>
+                        <p class="text-gray-600 leading-relaxed">
+                            To create a safe, joyful, and activity-based learning environment where every child feels loved and valued. We aim to be the foundation of your child's bright future by focusing on holistic early childhood development.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <i class="ph-fill ph-plant text-2xl text-brand-green mb-2"></i>
+                                <h4 class="font-bold text-sm">Holistic Growth</h4>
+                            </div>
+                            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm">
+                                <i class="ph-fill ph-users text-2xl text-brand-blue mb-2"></i>
+                                <h4 class="font-bold text-sm">Parent Connect</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PROGRAMS PAGE ================= -->
+        <section id="programs" class="page-section container mx-auto px-4 py-12">
+            <div class="text-center mb-16">
+                <span class="text-brand-blue font-bold uppercase tracking-widest text-xs bg-blue-50 px-3 py-1 rounded-full">Curriculum</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-800 mt-3">Our Programs</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Program 1 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-card hover-lift border border-gray-100 group">
+                    <div class="h-2 bg-brand-green"></div>
+                    <div class="p-8 text-center">
+                        <div class="w-20 h-20 bg-green-50 rounded-full mx-auto flex items-center justify-center text-4xl text-brand-green mb-6 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-baby"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Day Care</h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">2+ Years</p>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">A home away from home. Nutritious meals, nap time, and playful engagement.</p>
+                        <button onclick="navigateTo('admissions')" class="text-brand-green font-bold text-sm hover:underline">View Details</button>
+                    </div>
+                </div>
+
+                <!-- Program 2 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-float hover-lift border border-gray-100 relative group">
+                    <div class="absolute top-0 right-0 bg-brand-yellow text-brand-blue text-[10px] font-bold px-3 py-1 rounded-bl-lg">POPULAR</div>
+                    <div class="h-2 bg-brand-yellow"></div>
+                    <div class="p-8 text-center">
+                        <div class="w-20 h-20 bg-yellow-50 rounded-full mx-auto flex items-center justify-center text-4xl text-yellow-600 mb-6 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-star"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">PP - I</h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">3 - 4 Years</p>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">Activity based learning focusing on language, motor skills, and social interaction.</p>
+                        <button onclick="navigateTo('admissions')" class="px-6 py-2 bg-brand-yellow text-brand-blue text-sm font-bold rounded-full">Enroll Now</button>
+                    </div>
+                </div>
+
+                <!-- Program 3 -->
+                <div class="bg-white rounded-2xl overflow-hidden shadow-card hover-lift border border-gray-100 group">
+                    <div class="h-2 bg-brand-blue"></div>
+                    <div class="p-8 text-center">
+                        <div class="w-20 h-20 bg-blue-50 rounded-full mx-auto flex items-center justify-center text-4xl text-brand-blue mb-6 group-hover:scale-110 transition-transform">
+                            <i class="ph-fill ph-book-open"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">PP - II</h3>
+                        <p class="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">4 - 5 Years</p>
+                        <p class="text-gray-600 mb-6 text-sm leading-relaxed">Foundation literacy, numeracy skills, and school readiness preparation.</p>
+                        <button onclick="navigateTo('admissions')" class="text-brand-blue font-bold text-sm hover:underline">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FACILITIES PAGE ================= -->
+        <section id="facilities" class="page-section container mx-auto px-4 py-12">
+            <div class="text-center mb-16">
+                <span class="text-brand-green font-bold uppercase tracking-widest text-xs bg-green-50 px-3 py-1 rounded-full">Infrastructure</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-800 mt-3">Our Facilities</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <!-- Facility Items -->
+                <div class="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-blue-100 p-3 rounded-lg text-brand-blue text-xl"><i class="ph-fill ph-chalkboard"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Spacious Classrooms</h4>
+                        <p class="text-xs text-gray-500 mt-1">Well ventilated and pollution-free.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-green-100 p-3 rounded-lg text-brand-green text-xl"><i class="ph-fill ph-soccer-ball"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Play Area</h4>
+                        <p class="text-xs text-gray-500 mt-1">Safe zone for physical activities.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-red-100 p-3 rounded-lg text-brand-red text-xl"><i class="ph-fill ph-video-camera"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">CCTV Access</h4>
+                        <p class="text-xs text-gray-500 mt-1">Monitoring for parent peace of mind.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-yellow-100 p-3 rounded-lg text-yellow-600 text-xl"><i class="ph-fill ph-magic-wand"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Learning Aids</h4>
+                        <p class="text-xs text-gray-500 mt-1">Montessori educational materials.</p>
+                    </div>
+                </div>
+                <div class="flex items-start gap-4 p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                    <div class="bg-purple-100 p-3 rounded-lg text-purple-600 text-xl"><i class="ph-fill ph-drop"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-800">Hygiene</h4>
+                        <p class="text-xs text-gray-500 mt-1">Clean water and sanitized spaces.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Gallery -->
+            <h3 class="text-xl font-bold mb-6 text-gray-800 border-l-4 border-brand-yellow pl-3">Photo Gallery</h3>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=400" class="rounded-xl shadow-sm hover:opacity-90 transition-opacity">
+                <img src="https://images.unsplash.com/photo-1596464716127-f9a8759fa069?auto=format&fit=crop&w=400" class="rounded-xl shadow-sm hover:opacity-90 transition-opacity">
+                <img src="https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=400" class="rounded-xl shadow-sm hover:opacity-90 transition-opacity">
+                <img src="https://images.unsplash.com/photo-1587654780291-39c940483731?auto=format&fit=crop&w=400" class="rounded-xl shadow-sm hover:opacity-90 transition-opacity">
+            </div>
+        </section>
+
+        <!-- ================= ADMISSIONS PAGE ================= -->
+        <section id="admissions" class="page-section container mx-auto px-4 py-12">
+            <div class="bg-brand-blue rounded-3xl p-8 md:p-12 text-white relative overflow-hidden shadow-2xl">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full translate-x-1/3 -translate-y-1/3"></div>
+                
+                <div class="grid lg:grid-cols-2 gap-12 relative z-10">
+                    <div>
+                        <h2 class="text-3xl md:text-5xl font-display font-bold mb-4">Join Us Today</h2>
+                        <p class="text-blue-200 text-lg mb-8">We are accepting admissions for the current academic year.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex gap-4 items-center">
+                                <div class="w-10 h-10 rounded-full bg-brand-yellow text-brand-blue flex items-center justify-center font-bold">1</div>
+                                <p class="font-medium">Enquire via Form or Phone</p>
+                            </div>
+                            <div class="flex gap-4 items-center">
+                                <div class="w-10 h-10 rounded-full bg-brand-yellow text-brand-blue flex items-center justify-center font-bold">2</div>
+                                <p class="font-medium">Visit Campus & Meet Teachers</p>
+                            </div>
+                            <div class="flex gap-4 items-center">
+                                <div class="w-10 h-10 rounded-full bg-brand-yellow text-brand-blue flex items-center justify-center font-bold">3</div>
+                                <p class="font-medium">Complete Registration</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-2xl p-6 md:p-8 text-gray-800 shadow-xl">
+                        <form onsubmit="event.preventDefault(); alert('Thank you! We will call you shortly.');">
+                            <h3 class="text-2xl font-bold mb-6 text-brand-blue">Quick Enquiry</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 uppercase">Parent Name</label>
+                                    <input type="text" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-blue focus:ring-1 focus:ring-brand-blue transition-all">
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                     <div>
+                                        <label class="text-xs font-bold text-gray-500 uppercase">Child Name</label>
+                                        <input type="text" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-blue">
+                                    </div>
+                                     <div>
+                                        <label class="text-xs font-bold text-gray-500 uppercase">Age</label>
+                                        <input type="text" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-blue">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="text-xs font-bold text-gray-500 uppercase">Phone Number</label>
+                                    <input type="tel" class="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 focus:outline-none focus:border-brand-blue">
+                                </div>
+                                <button class="w-full bg-brand-red text-white font-bold py-3.5 rounded-lg hover:bg-red-700 transition-colors shadow-md mt-2">
+                                    Submit Enquiry
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CONTACT PAGE ================= -->
+        <section id="contact" class="page-section container mx-auto px-4 py-12">
+            <div class="max-w-4xl mx-auto">
+                 <div class="text-center mb-12">
+                    <span class="text-brand-blue font-bold uppercase tracking-widest text-xs bg-blue-50 px-3 py-1 rounded-full">Location</span>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold text-gray-800 mt-3">Get in Touch</h2>
+                </div>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-12">
+                    <div class="bg-white p-8 rounded-2xl shadow-card text-center border-b-4 border-brand-green">
+                        <div class="w-14 h-14 bg-green-50 text-brand-green rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="ph-fill ph-phone-call"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Phone</h3>
+                        <p class="text-gray-500 mb-4 text-sm">Mon-Sat, 9am - 6pm</p>
+                        <a href="tel:8466032289" class="text-2xl font-bold text-gray-800 hover:text-brand-green transition-colors">8466032289</a>
+                    </div>
+                    
+                    <div class="bg-white p-8 rounded-2xl shadow-card text-center border-b-4 border-brand-red">
+                         <div class="w-14 h-14 bg-red-50 text-brand-red rounded-full flex items-center justify-center mx-auto mb-4 text-2xl"><i class="ph-fill ph-map-pin"></i></div>
+                        <h3 class="text-xl font-bold mb-2">Address</h3>
+                        <p class="text-gray-800 font-medium">Allwyn Colony</p>
+                        <p class="text-gray-500 text-sm">(Near Tulasivanam)</p>
+                    </div>
+                </div>
+
+                <div class="bg-gray-200 rounded-2xl h-80 flex items-center justify-center relative overflow-hidden shadow-inner">
+                    <div class="text-center text-gray-400">
+                        <i class="ph-fill ph-map-trifold text-4xl mb-2"></i>
+                        <p class="font-bold">Google Maps Embed</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8 mt-12">
+        <div class="container mx-auto px-4 grid md:grid-cols-3 gap-12 mb-12">
+            <div>
+                 <div class="flex items-center gap-2 mb-6">
+                    <div class="w-8 h-8 bg-brand-yellow text-brand-blue rounded flex items-center justify-center"><i class="ph-fill ph-graduation-cap"></i></div>
+                    <h2 class="text-xl font-bold font-display">Muktha Public School</h2>
+                </div>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Building a strong foundation for the future leaders of our world with love, care, and quality education.
+                </p>
+            </div>
+            <div>
+                <h3 class="font-bold text-lg mb-6 text-brand-yellow">Quick Links</h3>
+                <div class="grid grid-cols-2 gap-3 text-sm text-gray-400">
+                    <button onclick="navigateTo('home')" class="text-left hover:text-white transition-colors">Home</button>
+                    <button onclick="navigateTo('facilities')" class="text-left hover:text-white transition-colors">Facilities</button>
+                    <button onclick="navigateTo('about')" class="text-left hover:text-white transition-colors">About Us</button>
+                    <button onclick="navigateTo('admissions')" class="text-left hover:text-white transition-colors">Admissions</button>
+                    <button onclick="navigateTo('programs')" class="text-left hover:text-white transition-colors">Programs</button>
+                    <button onclick="navigateTo('contact')" class="text-left hover:text-white transition-colors">Contact</button>
+                </div>
+            </div>
+            <div>
+                 <h3 class="font-bold text-lg mb-6 text-brand-yellow">Contact Info</h3>
+                 <p class="text-gray-400 text-sm mb-3 flex items-center gap-3"><i class="ph-bold ph-phone text-white"></i> 8466032289</p>
+                 <p class="text-gray-400 text-sm flex items-center gap-3"><i class="ph-bold ph-map-pin text-white"></i> Allwyn Colony, Hyderabad</p>
+            </div>
+        </div>
+        <div class="border-t border-gray-800 text-center pt-8 text-gray-600 text-xs">
+            &copy; 2024 Muktha Public School. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript Router Logic -->
+    <script>
+        function navigateTo(pageId) {
+            // 1. Hide all sections
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 2. Show target section
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // 3. Update Navbar State
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                if(link.dataset.target === pageId) {
+                    link.classList.add('nav-active');
+                } else {
+                    link.classList.remove('nav-active');
+                }
+            });
+
+            // 4. Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        function mobileNavigate(pageId) {
+            navigateTo(pageId);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Initialize: Check URL hash or default to home
+        window.addEventListener('load', () => {
+            const hash = window.location.hash.substring(1); // remove #
+            if (hash && document.getElementById(hash)) {
+                navigateTo(hash);
+            } else {
+                navigateTo('home');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
